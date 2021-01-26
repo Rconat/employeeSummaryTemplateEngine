@@ -14,9 +14,116 @@ const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
+inquirer
+    .prompt({
+        type: 'list',
+        name: 'role',
+        message: 'What is the employee\'s role?',
+        choices: ['Manager','Engineer','Intern']
+    })
+    .then(() => {
+        if (role = 'Manager') {
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'name',
+                    message: 'What is the employee\'s name?'
+                },
+                {
+                    type:'input',
+                    id: 'id',
+                    message: 'What is the employee\'s id number?'
+                },
+                {
+                    type: 'input',
+                    email: 'email',
+                    message: 'What is the emplyee\'s email?'
+                },
+                {
+                    type: 'input',
+                    office: 'office',
+                    message: 'What is the emplyee\'s office number?'
+                },
+            ])
+            .then(answers => {
+                
+                // After the user has input all employees desired, call the `render` function (required above) and pass in an array containing all employee objects; the `render` function will generate and return a block of HTML including templated divs for each employee!
+                render(answers)
+            })
+            .catch(error => {
+                if(error) {
+                    console.log ("error rendering employee")
+                }
+            })
+        } else if (role = 'Engineer') {
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'name',
+                    message: 'What is the engineer\'s name?'
+                },
+                {
+                    type:'input',
+                    id: 'id',
+                    message: 'What is the engineer\'s id number?'
+                },
+                {
+                    type: 'input',
+                    email: 'email',
+                    message: 'What is the engineer\'s email?'
+                },
+                {
+                    type: 'input',
+                    github: 'github',
+                    message: 'What is the engineer\'s Github Address?'
+                },
+            ])
+            .then(answers => {
+                
+                // After the user has input all employees desired, call the `render` function (required above) and pass in an array containing all employee objects; the `render` function will generate and return a block of HTML including templated divs for each employee!
+                render(answers)
+            })
+            .catch(error => {
+                if(error) {
+                    console.log ("error rendering employee")
+                }
+            })
+        } else if (role = 'Intern') {
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'name',
+                    message: 'What is the intern\'s name?'
+                },
+                {
+                    type:'input',
+                    id: 'id',
+                    message: 'What is the intern\'s id number?'
+                },
+                {
+                    type: 'input',
+                    email: 'email',
+                    message: 'What is the intern\'s email?'
+                },
+                {
+                    type: 'input',
+                    office: 'office',
+                    message: 'What is the intern\'s school?'
+                },
+            ])
+            .then(answers => {
+                
+                // After the user has input all employees desired, call the `render` function (required above) and pass in an array containing all employee objects; the `render` function will generate and return a block of HTML including templated divs for each employee!
+                render(answers)
+            })
+            .catch(error => {
+                if(error) {
+                    console.log ("error rendering employee")
+                }
+            })
+        }
+    })
+    
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
