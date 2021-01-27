@@ -16,118 +16,131 @@ const employeeList = []
 
 inquirer
     .prompt([{
-        type: 'list',
-        name: 'role',
-        message: 'What is the employee\'s role?',
-        choices: ['Manager','Engineer','Intern']
+        type: 'confirm',
+        name: 'newEmployee',
+        message: "Would you like to add a new employee?"
     }])
-    .then((answers) => {
-        console.log(answers)
-        if (answers.role === 'Manager') {
-            inquirer.prompt([
-                {
-                    type: 'input',
-                    name: 'name',
-                    message: 'What is the manager\'s name?'
-                },
-                {
-                    type:'input',
-                    name: 'id',
-                    message: 'What is the manager\'s id number?'
-                },
-                {
-                    type: 'input',
-                    name: 'email',
-                    message: 'What is the manager\'s email?'
-                },
-                {
-                    type: 'input',
-                    name: 'office',
-                    message: 'What is the manager\'s office number?'
-                },
-            ])
-            .then(managerAnswers => {
-                const manager = new Manager ((managerAnswers.office, managerAnswers.name, namagerAnswers.id, managerAnswers.email))
-                employeeList.push(manager)
-            })
-            .catch(error => {
-                if(error) {
-                    console.log ("error rendering employee")
-                }
-            })
-        } else if (role === 'Engineer') {
-            inquirer.prompt([
-                {
-                    type: 'input',
-                    name: 'name',
-                    message: 'What is the engineer\'s name?'
-                },
-                {
-                    type:'input',
-                    name: 'id',
-                    message: 'What is the engineer\'s id number?'
-                },
-                {
-                    type: 'input',
-                    name: 'email',
-                    message: 'What is the engineer\'s email?'
-                },
-                {
-                    type: 'input',
-                    name: 'github',
-                    message: 'What is the engineer\'s Github Address?'
-                },
-            ])
-            .then(engineerAnswers => {
-                const engineer = new Engineer ((engineerAnswers.office, engineerAnswers.name, engineerAnswers.id, engineerAnswers.email))
-                employeeList.push(engineer)
-            })
-            .catch(error => {
-                if(error) {
-                    console.log ("error rendering employee")
-                }
-            })
-        } else if (role === 'Intern') {
-            inquirer.prompt([
-                {
-                    type: 'input',
-                    name: 'name',
-                    message: 'What is the intern\'s name?'
-                },
-                {
-                    type:'input',
-                    name: 'id',
-                    message: 'What is the intern\'s id number?'
-                },
-                {
-                    type: 'input',
-                    name: 'email',
-                    message: 'What is the intern\'s email?'
-                },
-                {
-                    type: 'input',
-                    name: 'office',
-                    message: 'What is the intern\'s school?'
-                },
-            ])
-            .then(internAnswers => {
-                const intern = new Intern ((internAnswers.office, internAnswers.name, internAnswers.id, internAnswers.email))
-                employeeList.push(intern)
-            })
-            .catch(error => {
-                if(error) {
-                    console.log ("error rendering employee" + error)
-                }
-            })
-        }
-        
-        // After the user has input ALL employees desired, call the `render` function (required above) and pass in an array containing all employee objects; the `render` function will generate and return a block of HTML including templated divs for each employee!
-        render(employeeList)
+    .then((result) => {
+        console.log(result.newEmployee)
+        while (result.newEmployee) {
+            inquirer.prompt([{
+                    type: 'list',
+                    name: 'role',
+                    message: 'What is the employee\'s role?',
+                    choices: ['Manager','Engineer','Intern']
+                }])
+                .then((answers) => {
+                    console.log(answers)
+                    if (answers.role === 'Manager') {
+                        inquirer.prompt([
+                            {
+                                type: 'input',
+                                name: 'name',
+                                message: 'What is the manager\'s name?'
+                            },
+                            {
+                                type:'input',
+                                name: 'id',
+                                message: 'What is the manager\'s id number?'
+                            },
+                            {
+                                type: 'input',
+                                name: 'email',
+                                message: 'What is the manager\'s email?'
+                            },
+                            {
+                                type: 'input',
+                                name: 'office',
+                                message: 'What is the manager\'s office number?'
+                            },
+                        ])
+                        .then(managerAnswers => {
+                            const manager = new Manager ((managerAnswers.office, managerAnswers.name, namagerAnswers.id, managerAnswers.email))
+                            employeeList.push(manager)
+                        })
+                        .catch(error => {
+                            if(error) {
+                                console.log ("error rendering employee")
+                            }
+                        })
+                    } else if (role === 'Engineer') {
+                        inquirer.prompt([
+                            {
+                                type: 'input',
+                                name: 'name',
+                                message: 'What is the engineer\'s name?'
+                            },
+                            {
+                                type:'input',
+                                name: 'id',
+                                message: 'What is the engineer\'s id number?'
+                            },
+                            {
+                                type: 'input',
+                                name: 'email',
+                                message: 'What is the engineer\'s email?'
+                            },
+                            {
+                                type: 'input',
+                                name: 'github',
+                                message: 'What is the engineer\'s Github Address?'
+                            },
+                        ])
+                        .then(engineerAnswers => {
+                            const engineer = new Engineer ((engineerAnswers.office, engineerAnswers.name, engineerAnswers.id, engineerAnswers.email))
+                            employeeList.push(engineer)
+                        })
+                        .catch(error => {
+                            if(error) {
+                                console.log ("error rendering employee")
+                            }
+                        })
+                    } else if (role === 'Intern') {
+                        inquirer.prompt([
+                            {
+                                type: 'input',
+                                name: 'name',
+                                message: 'What is the intern\'s name?'
+                            },
+                            {
+                                type:'input',
+                                name: 'id',
+                                message: 'What is the intern\'s id number?'
+                            },
+                            {
+                                type: 'input',
+                                name: 'email',
+                                message: 'What is the intern\'s email?'
+                            },
+                            {
+                                type: 'input',
+                                name: 'office',
+                                message: 'What is the intern\'s school?'
+                            },
+                        ])
+                        .then(internAnswers => {
+                            const intern = new Intern ((internAnswers.office, internAnswers.name, internAnswers.id, internAnswers.email))
+                            employeeList.push(intern)
+                        })
+                        .catch(error => {
+                            if(error) {
+                                console.log ("error rendering employee" + error)
+                            }
+                        })
+                    }
+                    
+                    
+                })
+            }
 
+            // After the user has input ALL employees desired, call the `render` function (required above) and pass in an array containing all employee objects; the `render` function will generate and return a block of HTML including templated divs for each employee!
+
+            console.log(employeeList)
+            render(employeeList)
     })
-    
 
 // After you have your html, you're now ready to create an HTML file using the HTML returned from the `render` function. Now write it to a file named `team.html` in the `output` folder. You can use the variable `outputPath` above target this location. Hint: you may need to check if the `output` folder exists and create it if it does not.
+
 fs.appendFile(outputPath, data, (error) => {
     if (error) {
         console.log(error)
