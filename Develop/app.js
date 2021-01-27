@@ -64,17 +64,17 @@ inquirer
                 },
                 {
                     type:'input',
-                    id: 'id',
+                    name: 'id',
                     message: 'What is the engineer\'s id number?'
                 },
                 {
                     type: 'input',
-                    email: 'email',
+                    name: 'email',
                     message: 'What is the engineer\'s email?'
                 },
                 {
                     type: 'input',
-                    github: 'github',
+                    name: 'github',
                     message: 'What is the engineer\'s Github Address?'
                 },
             ])
@@ -96,17 +96,17 @@ inquirer
                 },
                 {
                     type:'input',
-                    id: 'id',
+                    name: 'id',
                     message: 'What is the intern\'s id number?'
                 },
                 {
                     type: 'input',
-                    email: 'email',
+                    name: 'email',
                     message: 'What is the intern\'s email?'
                 },
                 {
                     type: 'input',
-                    office: 'office',
+                    name: 'office',
                     message: 'What is the intern\'s school?'
                 },
             ])
