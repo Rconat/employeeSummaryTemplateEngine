@@ -10,50 +10,27 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+let managerAnswers = []
+let engineerAnswers = []
+let internAnswers = []
+
 let employeeList = []
 
 // Write code to use inquirer to gather information about the development team members, and to create objects for each team member (using the correct classes as blueprints!)
 
-function addAnotherEmployee() {
+const addAnotherEmployee = () => {
     inquirer
     .prompt([{
         type: 'confirm',
         name: 'newEmployee',
         message: "Would you like to add a new employee?"
     }])
-    .then((result) => {
-        if(result.newEmployee) {
-        console.log("adding a new employee")
+    .then(() => {
         addEmployee()
-        } else {
-            allDone()
-        }
     })
 }
 
-function addEmployee() {
-    inquirer.prompt([{
-        type: 'list',
-        name: 'role',
-        message: 'What is the employee\'s role?',
-        choices: ['Manager','Engineer','Intern']
-    }])
-    .then((answers) => {
-        console.log(answers)
-        if (answers.role === 'Manager') {
-            addManager()
-            addAnotherEmployee()
-        } else if (role === 'Engineer') {
-            addEngineer()
-            addAnotherEmployee()
-        } else if (role === 'Intern') {
-            addIntern()
-            addAnotherEmployee()
-        }
-    })
-}
-
-function addManager() {
+const addManager = () => {
     inquirer.prompt([
         {
             type: 'input',
@@ -76,19 +53,109 @@ function addManager() {
             message: 'What is the manager\'s office number?'
         },
     ])
-    .then(managerAnswers => {
-        const manager = new Manager ((managerAnswers.office, managerAnswers.name, namagerAnswers.id, managerAnswers.email))
-        employeeList.push(manager)
-        console.log('adding new manager to the employee list')
-    })
-    .catch(error => {
-        if(error) {
-            console.log ("error rendering employee")
+    return managerAnswers
+}
+
+const addEmployee = () => {
+    inquirer.prompt([{
+        type: 'list',
+        name: 'role',
+        message: 'What is the employee\'s role?',
+        choices: ['Manager','Engineer','Intern']
+    }])
+    .then((answers) => {
+        console.log(answers)
+        if (answers.role === 'Manager') {
+
+            addManager()
+                .then((managerAnswers) => {
+                    const manager = new Manager ((managerAnswers.office, managerAnswers.name, namagerAnswers.id, managerAnswers.email))
+                    employeeList.push(manager)
+                    console.log('adding new manager to the employee list')
+                })
+                .catch(error => {
+                    if(error) {
+                        console.log ("error rendering employee")
+                    }
+                })
+
+            addAnotherEmployee()
+                .then((result) => {
+                    if(result.newEmployee) {
+                    console.log("adding a new employee")
+                    addEmployee()
+                    } else {
+                        allDone()
+                    }
+                })
+                .catch(error => {
+                    if(error) {
+                        console.log ("error adding a new employee")
+                    }
+                })
+                
+        } else if (role === 'Engineer') {
+
+            addEngineer()
+                .then(engineerAnswers => {
+                    const engineer = new Engineer ((engineerAnswers.github, engineerAnswers.name, engineerAnswers.id, engineerAnswers.email))
+                    employeeList.push(engineer)
+                    console.log('adding new engineer to the employee list')
+                })
+                .catch(error => {
+                    if(error) {
+                        console.log ("error rendering employee")
+                    }   
+                })
+
+            addAnotherEmployee()
+                .then((result) => {
+                    if(result.newEmployee) {
+                    console.log("adding a new employee")
+                    addEmployee()
+                    } else {
+                        allDone()
+                    }
+                })
+                .catch(error => {
+                    if(error) {
+                        console.log ("error adding a new employee")
+                    }   
+                })
+            
+        } else if (role === 'Intern') {
+
+            addIntern()
+                .then(internAnswers => {
+                    const intern = new Intern ((internAnswers.school, internAnswers.name, internAnswers.id, internAnswers.email))
+                    employeeList.push(intern)
+                    console.log('adding new intern to the employee list')
+                })
+                .catch(error => {
+                    if(error) {
+                        console.log ("error rendering employee")
+                    }
+                })
+
+            addAnotherEmployee()
+                .then((result) => {
+                    if(result.newEmployee) {
+                    console.log("adding a new employee")
+                    addEmployee()
+                    } else {
+                        allDone()
+                    }
+                })
+                .catch(error => {
+                    if(error) {
+                        console.log ("error adding a new employee")
+                    }   
+                })
         }
     })
 }
 
-function addEngineer() {
+const addEngineer = () => {
     inquirer.prompt([
         {
             type: 'input',
@@ -111,19 +178,9 @@ function addEngineer() {
             message: 'What is the engineer\'s GitHub page?'
         },
     ])
-    .then(engineerAnswers => {
-        const engineer = new Engineer ((engineerAnswers.office, engineerAnswers.name, engineerAnswers.id, engineerAnswers.email))
-        employeeList.push(engineer)
-        console.log('adding new engineer to the employee list')
-    })
-    .catch(error => {
-        if(error) {
-            console.log ("error rendering employee")
-        }
-    })
 }
 
-function addIntern() {
+const addIntern = () => {
     inquirer.prompt([
         {
             type: 'input',
@@ -146,16 +203,6 @@ function addIntern() {
             message: 'What school do they attend?'
         },
     ])
-    .then(internAnswers => {
-        const intern = new Intern ((internAnswers.office, internAnswers.name, internAnswers.id, internAnswers.email))
-        employeeList.push(intern)
-        console.log('adding new intern to the employee list')
-    })
-    .catch(error => {
-        if(error) {
-            console.log ("error rendering employee")
-        }
-    })
 }
 
 // After the user has input ALL employees desired, call the `render` function (required above) and pass in an array containing all employee objects; the `render` function will generate and return a block of HTML including templated divs for each employee!
