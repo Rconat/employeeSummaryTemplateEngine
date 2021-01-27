@@ -10,17 +10,20 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const employeeList = []
+
 // Write code to use inquirer to gather information about the development team members, and to create objects for each team member (using the correct classes as blueprints!)
 
 inquirer
-    .prompt({
+    .prompt([{
         type: 'list',
-        role: 'role',
+        name: 'role',
         message: 'What is the employee\'s role?',
         choices: ['Manager','Engineer','Intern']
-    })
-    .then(() => {
-        if (role = 'Manager') {
+    }])
+    .then((answers) => {
+        console.log(answers)
+        if (answers.role === 'Manager') {
             inquirer.prompt([
                 {
                     type: 'input',
@@ -29,29 +32,30 @@ inquirer
                 },
                 {
                     type:'input',
-                    id: 'id',
+                    name: 'id',
                     message: 'What is the manager\'s id number?'
                 },
                 {
                     type: 'input',
-                    email: 'email',
+                    name: 'email',
                     message: 'What is the manager\'s email?'
                 },
                 {
                     type: 'input',
-                    office: 'office',
+                    name: 'office',
                     message: 'What is the manager\'s office number?'
                 },
             ])
-            .then(answers => {
-                renderManager(answers)
+            .then(managerAnswers => {
+                const manager = new Manager ((managerAnswers.office, managerAnswers.name, namagerAnswers.id, managerAnswers.email))
+                employeeList.push(manager)
             })
             .catch(error => {
                 if(error) {
                     console.log ("error rendering employee")
                 }
             })
-        } else if (role = 'Engineer') {
+        } else if (role === 'Engineer') {
             inquirer.prompt([
                 {
                     type: 'input',
@@ -74,15 +78,16 @@ inquirer
                     message: 'What is the engineer\'s Github Address?'
                 },
             ])
-            .then(answers => {
-                renderEngineer(answers)
+            .then(engineerAnswers => {
+                const engineer = new Engineer ((engineerAnswers.office, engineerAnswers.name, engineerAnswers.id, engineerAnswers.email))
+                employeeList.push(engineer)
             })
             .catch(error => {
                 if(error) {
                     console.log ("error rendering employee")
                 }
             })
-        } else if (role = 'Intern') {
+        } else if (role === 'Intern') {
             inquirer.prompt([
                 {
                     type: 'input',
@@ -105,8 +110,9 @@ inquirer
                     message: 'What is the intern\'s school?'
                 },
             ])
-            .then(answers => {
-                renderIntern(answers)
+            .then(internAnswers => {
+                const intern = new Intern ((internAnswers.office, internAnswers.name, internAnswers.id, internAnswers.email))
+                employeeList.push(intern)
             })
             .catch(error => {
                 if(error) {
@@ -116,7 +122,7 @@ inquirer
         }
         
         // After the user has input ALL employees desired, call the `render` function (required above) and pass in an array containing all employee objects; the `render` function will generate and return a block of HTML including templated divs for each employee!
-        render(html)
+        render(employeeList)
 
     })
     
